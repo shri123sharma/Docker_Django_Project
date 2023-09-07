@@ -1,0 +1,29 @@
+version: "3.10.4"
+
+services:
+  server:
+    image: django-server
+    container_name: django-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  postgres_data:
+
+# docker exec -it yiialkalmi_postgres_1 psql -U project -W project:-(postgres command inside docker)
+# docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres:-(postgres command run)
+
+    
